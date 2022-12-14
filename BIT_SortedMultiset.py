@@ -1,7 +1,7 @@
 import bisect
-
-
-class BIT_SortedSet:
+ 
+ 
+class BIT_SortedMultiset:
     def __init__(self, A, compress=True, sort_flag=False):
         self.compress = compress
         self.N = len(A)
@@ -21,13 +21,13 @@ class BIT_SortedSet:
         self.BIT = [0] * (self.N + 5)
         self.size = 0
         self.cnt = [0] * self.N
-
+ 
     def BIT_add(self, i, x):
         idx = i + 1
         while idx < self.N + 1:
             self.BIT[idx] += x
             idx += idx & (-idx)
-
+ 
     def BIT_query(self, i):
         res = 0
         idx = i + 1
@@ -35,7 +35,7 @@ class BIT_SortedSet:
             res += self.BIT[idx]
             idx -= idx & (-idx)
         return res
-
+ 
     def BIT_lower_left(self, w):
         if w <= 0 or w > self.size:
             return None
@@ -47,25 +47,27 @@ class BIT_SortedSet:
                 x += k
             k //= 2
         return x
-
+ 
     def __contains__(self, x):
         if self.compress:
             x = self.index_dic[x]
         return self.cnt[x] >= 1
-
+    
+    def count(self, x):
+        if self.compress:
+            x = self.index_dic[x]
+        return self.cnt[x]
+    
     def __len__(self):
         return self.size
-
+ 
     def add(self, x):
         if self.compress:
             x = self.index_dic[x]
-        if self.cnt[x] == 1:
-            return False
         self.BIT_add(x, 1)
         self.size += 1
         self.cnt[x] += 1
-        return True
-
+ 
     def discard(self, x):
         if self.compress:
             x = self.index_dic[x]
@@ -75,7 +77,7 @@ class BIT_SortedSet:
             self.cnt[x] -= 1
             return True
         return False
-
+ 
     def find_kth_val(self, k):
         res = self.BIT_lower_left(k + 1)
         if res == None:
@@ -83,14 +85,14 @@ class BIT_SortedSet:
         if self.compress:
             res = self.A[res]
         return res
-
+ 
     def __getitem__(self, x):
         if x < 0:
             x += self.size
         if x < 0 or x >= self.size:
             raise IndexError
         return self.find_kth_val(x)
-
+ 
     def index_right(self, x):
         if self.N == 0:
             return 0
@@ -101,7 +103,7 @@ class BIT_SortedSet:
         else:
             y = min(x, self.N - 1)
         return self.BIT_query(y)
-
+ 
     def index(self, x):
         if self.N == 0:
             return 0
@@ -116,19 +118,19 @@ class BIT_SortedSet:
         elif self.A[y] == x:
             y -= 1
         return self.BIT_query(y)
-
+ 
     def gt(self, x):
         return self.find_kth_val(self.index_right(x))
-
+ 
     def ge(self, x):
         return self.find_kth_val(self.index(x))
-
+ 
     def lt(self, x):
         return self.find_kth_val(self.index(x) - 1)
-
+ 
     def le(self, x):
         return self.find_kth_val(self.index_right(x) - 1)
-
+ 
     def __str__(self):
         return (
             "{"
