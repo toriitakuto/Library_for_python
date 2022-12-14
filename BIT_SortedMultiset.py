@@ -1,7 +1,7 @@
 import bisect
 
 
-class BIT_SortedMultiset:
+class BIT_SortedSet:
     def __init__(self, A, compress=True, sort_flag=False):
         self.compress = compress
         self.N = len(A)
@@ -52,21 +52,19 @@ class BIT_SortedMultiset:
         if self.compress:
             x = self.index_dic[x]
         return self.cnt[x] >= 1
-    
-    def count(self, x):
-        if self.compress:
-            x = self.index_dic[x]
-        return self.cnt[x]
-    
+
     def __len__(self):
         return self.size
 
     def add(self, x):
         if self.compress:
             x = self.index_dic[x]
+        if self.cnt[x] == 1:
+            return False
         self.BIT_add(x, 1)
         self.size += 1
         self.cnt[x] += 1
+        return True
 
     def discard(self, x):
         if self.compress:
