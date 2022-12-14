@@ -92,6 +92,8 @@ class BIT_SortedSet:
         return self.find_kth_val(x)
 
     def index_right(self, x):
+        if self.N == 0:
+            return 0
         if x < self.A[0]:
             return 0
         if self.compress:
@@ -101,6 +103,8 @@ class BIT_SortedSet:
         return self.BIT_query(y)
 
     def index(self, x):
+        if self.N == 0:
+            return 0
         if x <= self.A[0]:
             return 0
         if self.compress:
