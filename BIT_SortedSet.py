@@ -2,7 +2,7 @@ import bisect
 
 
 class BIT_SortedSet:
-    def __init__(self, A, compress=False, sort_flag=False):
+    def __init__(self, A, compress=True, sort_flag=False):
         self.compress = compress
         self.N = len(A)
         self.log = 0
