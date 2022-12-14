@@ -52,7 +52,12 @@ class BIT_SortedMultiset:
         if self.compress:
             x = self.index_dic[x]
         return self.cnt[x] >= 1
-
+    
+    def count(self, x):
+        if self.compress:
+            x = self.index_dic[x]
+        return self.cnt[x]
+    
     def __len__(self):
         return self.size
 
