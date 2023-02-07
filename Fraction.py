@@ -14,7 +14,8 @@ class Fraction:
             self.num = F.num
             self.den = F.den
         elif type(num) == type(den) == int:
-            # assert den != 0
+            assert den != 0
+            '''
             inf = 10**9
             if den == 0:
                 if num > 0:
@@ -26,6 +27,7 @@ class Fraction:
                 else:
                     raise Exception
                 return
+            '''
             den, num = max((den, num), (-den, -num))
             g = gcd(den, num)
             self.num = num // g
