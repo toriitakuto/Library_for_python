@@ -3,8 +3,10 @@ from math import gcd
 
 class Fraction:
     def __init__(self, num, den=1):
-        if type(num) == float:
+        if type(num) == float or type(num) == str:
             assert den == 1
+            if type(num) == str:
+                num = float(num)
             S = str("{:.10f}".format(num))
             N = len(S)
             point = -1
@@ -19,7 +21,7 @@ class Fraction:
             self.den = F.den
         elif type(num) == type(den) == int:
             assert den != 0
-            """
+            '''
             inf = 10**9
             if den == 0:
                 if num > 0:
@@ -31,7 +33,7 @@ class Fraction:
                 else:
                     raise Exception
                 return
-            """
+            '''
             den, num = max((den, num), (-den, -num))
             g = gcd(den, num)
             self.num = num // g
@@ -50,21 +52,29 @@ class Fraction:
         return Fraction(-num, den)
 
     def __add__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return Fraction(num1 * den2 + num2 * den1, den1 * den2)
 
     def __sub__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return Fraction(num1 * den2 - num2 * den1, den1 * den2)
 
     def __mul__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return Fraction(num1 * num2, den1 * den2)
 
     def __truediv__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return Fraction(num1 * den2, num2 * den1)
@@ -80,6 +90,8 @@ class Fraction:
     __radd__ = __add__
 
     def __rsub__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = other.num, other.den
         num2, den2 = self.num, self.den
         return Fraction(num1 * den2 - num2 * den1, den1 * den2)
@@ -87,31 +99,43 @@ class Fraction:
     __rmul__ = __mul__
 
     def __truediv__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = other.num, other.den
         num2, den2 = self.num, self.den
         return Fraction(num1 * den2, num2 * den1)
 
     def __eq__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return num1 == num2 and den1 == den2
 
     def __lt__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return num1 * den2 < num2 * den1
 
     def __le__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return num1 * den2 <= num2 * den1
 
     def __gt__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return num1 * den2 > num2 * den1
 
     def __ge__(self, other):
+        if type(other) != Fraction:
+            other = Fraction(other)
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return num1 * den2 >= num2 * den1
