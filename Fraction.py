@@ -5,9 +5,10 @@ class Fraction:
     def __init__(self, num, den=1):
         if type(num) == float or type(num) == str:
             assert den == 1
-            if type(num) == str:
-                num = float(num)
-            S = str("{:.10f}".format(num))
+            if type(num) == float:
+                S = str("{:.10f}".format(num))
+            else:
+                S = num
             N = len(S)
             point = -1
             for i in range(N):
@@ -21,7 +22,7 @@ class Fraction:
             self.den = F.den
         elif type(num) == type(den) == int:
             assert den != 0
-            '''
+            """
             inf = 10**9
             if den == 0:
                 if num > 0:
@@ -33,7 +34,7 @@ class Fraction:
                 else:
                     raise Exception
                 return
-            '''
+            """
             den, num = max((den, num), (-den, -num))
             g = gcd(den, num)
             self.num = num // g
