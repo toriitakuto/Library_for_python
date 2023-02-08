@@ -99,7 +99,7 @@ class Fraction:
 
     __rmul__ = __mul__
 
-    def __truediv__(self, other):
+    def __rtruediv__(self, other):
         if type(other) != Fraction:
             other = Fraction(other)
         num1, den1 = other.num, other.den
@@ -140,3 +140,6 @@ class Fraction:
         num1, den1 = self.num, self.den
         num2, den2 = other.num, other.den
         return num1 * den2 >= num2 * den1
+    
+    def floor(self):
+      return self.num//self.den
