@@ -49,15 +49,9 @@ def modint_to_frac(a):
     if a == 0:
         return "0/1"
     for X in range(1, 10000):
-        for Y in range(1, X + 1):
-            Z = Y * inv(X) % mod
-            if a == Z:
-                return str(Y) + "/" + str(X)
-            if a == mod - Z:
-                return "-" + str(Y) + "/" + str(X)
-
-            Z = X * inv(Y) % mod
-            if a == Z:
-                return str(X) + "/" + str(Y)
-            if a == mod - Z:
-                return "-" + str(X) + "/" + str(Y)
+        Y = a * X % mod
+        if 0 < Y < 10000:
+            return str(Y) + "/" + str(X)
+        if mod - 10000 < Y < mod:
+            return "-" + str(mod - Y) + "/" + str(X)
+    return "inexpressible"
